@@ -1,11 +1,27 @@
 import React from "react";
-import {Button, Text, View} from "react-native";
+import { Text, View } from 'react-native';
+import {Button, TextInput} from "react-native-paper";
 
 function HomeScreen({navigation}) {
     return (
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <View style={{
+          flex: 1,
+          justifyContent: 'center',
+          gap: 20,
+          margin: 20
+        }}>
             <Text>Home Screen</Text>
-            <Button onPress={() => navigation.navigate('Details', {itemId: 40})} title='Pergi Ke Halaman Detail'></Button>
+          <TextInput label="Email"/>
+            <Button
+              mode="contained"
+              onPress={() =>
+                navigation.navigate('Details', {
+                  itemId: 40,
+                })
+              }
+            >
+                Button Paper
+            </Button>
         </View>
     )
 }
