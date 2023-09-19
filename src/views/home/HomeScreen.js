@@ -1,5 +1,5 @@
 import React from "react";
-import { TextInput, View, StyleSheet, Dimensions, Image } from 'react-native';
+import { TextInput, View, StyleSheet, Dimensions, Image, ScrollView, Text } from 'react-native';
 import { Ionicons } from 'react-native-vector-icons';
 import { IconButton } from 'react-native-paper';
 import Carousel from 'react-native-reanimated-carousel';
@@ -17,15 +17,18 @@ function HomeScreen() {
       }
     ];
     return (
-      <>
-        <View style={styles.container}>
+      <View style={styles.mainContaner}>
+        {/* SearchBar Component */}
+        <View style={styles.searchBarContainer}>
           <View style={[styles.searchBar, styles.borderShadow]}>
             <Ionicons name="search" size={12} color="black" />
             <TextInput placeholder="search"></TextInput>
           </View>
           <IconButton icon="menu"/>
         </View>
-        <View style={{ flex: 1, alignItems: 'center' }}>
+
+        {/* Carousel Component */}
+        <View style={{ alignItems: 'center' }}>
           <Carousel
             loop
             width={widht -30}
@@ -40,12 +43,36 @@ function HomeScreen() {
             )}
           />
         </View>
-      </>
+
+        {/* Category Component */}
+        <View>
+          <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+            {Array.from(Array(10)).map(() => (
+              <IconButton
+                icon={({ color, size }) => <View style={{
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}>
+                  <Ionicons name="home-outline" size={size} color={color} />
+                  <Text style={{
+                    fontSize: 10,
+                  }}>Home</Text>
+                </View>}
+                style={styles.iconButton}/>
+            ))}
+          </ScrollView>
+        </View>
+      </View>
     )
 }
 
 const styles = StyleSheet.create({
-  container: {
+  mainContaner: {
+    flex: 1,
+    padding: 10,
+    gap: 10,
+  },
+  searchBarContainer: {
     marginTop: 15,
     flexDirection: 'row',
     alignItems: 'center',
@@ -75,6 +102,13 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     borderRadius: 10,
+  },
+  iconButton: {
+    margin: 5,
+    borderRadius: 10,
+    backgroundColor: 'white',
+    width: 100,
+    height: 50,
   }
 });
 
