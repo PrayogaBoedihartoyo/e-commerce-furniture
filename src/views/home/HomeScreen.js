@@ -1,7 +1,7 @@
 import React from "react";
 import { TextInput, View, StyleSheet, Dimensions, Image, ScrollView, Text } from 'react-native';
 import { Ionicons } from 'react-native-vector-icons';
-import { IconButton } from 'react-native-paper';
+import { Card, IconButton } from 'react-native-paper';
 import Carousel from 'react-native-reanimated-carousel';
 
 function HomeScreen() {
@@ -62,8 +62,24 @@ function HomeScreen() {
             ))}
           </ScrollView>
         </View>
+
+        {/* Product Component */}
+        <View>
+          <Text style={{ fontSize: 18, fontWeight: 'bold' }}>Popular</Text>
+          <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{ paddingVertical: 10 }}>
+            {Array.from(Array(10)).map(() => (
+              <Card style={styles.cardContainer}>
+                <Card.Cover style={{ borderRadius: 0, height: 140 }} source={{ uri: 'https://picsum.photos/seed/1/200/300' }} />
+                <Card.Content style={{ padding: 10 }}>
+                  <Text style={{ fontSize: 12, fontWeight: 'bold', }}>Card Title</Text>
+                  <Text style={{ fontSize: 10, }}>Card Subtitle</Text>
+                </Card.Content>
+              </Card>
+            ))}
+          </ScrollView>
+        </View>
       </View>
-    )
+    );
 }
 
 const styles = StyleSheet.create({
@@ -109,6 +125,11 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     width: 100,
     height: 50,
+  },
+  cardContainer: {
+    width: 150,
+    marginRight: 15,
+    overflow: 'hidden',
   }
 });
 
