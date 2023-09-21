@@ -35,6 +35,9 @@ export default function DiscoverScreen() {
   const mapAnimation = new Animated.Value(0);
   const mapRef = React.useRef(null);
   const carouselAnimation = new Animated.Value(0);
+  const carouselAnimationRef = React.useRef(carouselAnimation);
+  const [isShowCarousel, setIsShowCarousel] = React.useState(true);
+
   const region = {
     latitude: 37.78825,
     longitude: -122.4324,
@@ -59,9 +62,15 @@ export default function DiscoverScreen() {
     });
     return { scale }
   })
+  const carouselInterpolate = carouselAnimationRef.current.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0, -1000],
+    extrapolate: 'clamp'
+  })
   const onHideCarousel = () => {
-    Animated.timing(carouselAnimation, {
-      toValue: 1000,
+    setIsShowCarousel((prev) => !prev);
+    Animated.timing(carouselAnimationRef.current, {
+      toValue: isShowCarousel ? 1 : 0,
       duration: 500,
       useNativeDriver: true
     }).start();
@@ -88,13 +97,13 @@ export default function DiscoverScreen() {
           ))
         }
       </MapView>
-      <IconButton icon="menu" mode="contained" onPress={onHideCarousel}/>
+      <IconButton icon={isShowCarousel ? "close" : "menu"} mode="contained" onPress={onHideCarousel}/>
       <View style={{position: 'absolute', top: 100, left: 50}} />
       <Animated.View style={{
         alignItems: 'center',
         transform: [
           {
-            translateX: carouselAnimation
+            translateY: carouselInterpolate
           },
         ],
       }}>
